@@ -27,5 +27,11 @@ public class TodoService {
     public boolean save(Todo todo){
         return data.add(todo);
     }
-
+    public void delete(int id){
+        for (Todo todo: data){
+            if(todo.getId() == id){
+                data.remove(todo);
+            }
+        }
+    }
 }
