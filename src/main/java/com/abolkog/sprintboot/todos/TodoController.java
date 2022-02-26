@@ -1,17 +1,33 @@
 package com.abolkog.sprintboot.todos;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @RestController
 @RequestMapping(value = "/api/v1/todos")
 public class TodoController {
 
-    @GetMapping("")
-    public Todo listTodo(){
-Todo test = new Todo(1,"first todo","this is my first task");
-return test;
+    @Autowired
+    private TodoService todoService;
+
+    @GetMapping(value = {"", "/"})
+    public List<Todo> getAllTodo(){
+    return todoService.findAll();
     }
+    @GetMapping("/{id}")
+    public Todo getTodoById(@PathVariable int id){
+        return todoService.getById(id);
+    }
+
+    @PostMapping(value = {"", "/"})
+    public Todo createNewTodo(@RequestBody  Todo todo){
+        if(todoService.save(todo)){
+            return todo;
+        }return null;
+    }
+
 }
