@@ -1,5 +1,6 @@
 package com.abolkog.sprintboot.todos;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,30 +9,28 @@ import java.util.List;
 
 @Service
 public class TodoService {
-    private List<Todo> data = new ArrayList<>(
-            Arrays.asList(
-                    new Todo(1,"first todo","this is my first task"),
-                    new Todo(2,"Second todo","this is my Second task"))
-    );
+
+    @Autowired
+    private TodoRepository todoRepository;
 
     public List<Todo> findAll(){
-        return data;
+        return todoRepository.findAll();
     }
 
-    public Todo getById(int id){
-        for (Todo todo: data){
-            if(todo.getId() == id) return todo;
-        }
-        return null;
+    public Todo getById(String id){
+
+    return todoRepository.findById(id).get();
     }
     public boolean save(Todo todo){
-        return data.add(todo);
+
+        return todoRepository.insert(todo) == null ? false : true;
+
+
     }
-    public void delete(int id){
-        for (Todo todo: data){
-            if(todo.getId() == id){
-                data.remove(todo);
-            }
-        }
+
+
+
+    public void delete(String id){
+ todoRepository.deleteById(id);
     }
 }

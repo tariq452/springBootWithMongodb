@@ -3,7 +3,6 @@ package com.abolkog.sprintboot.todos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -18,20 +17,19 @@ public class TodoController {
     public List<Todo> getAllTodo(){
     return todoService.findAll();
     }
+
     @GetMapping("/{id}")
-    public Todo getTodoById(@PathVariable int id){
+    public Todo getTodoById(@PathVariable String id){
         return todoService.getById(id);
     }
 
     @PostMapping(value = {"", "/"})
-    public Todo createNewTodo(@RequestBody  Todo todo){
-        if(todoService.save(todo)){
-            return todo;
-        }return null;
+    public boolean createNewTodo(@RequestBody  Todo todo){
+       return todoService.save(todo);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable int id){
+    public void deleteById(@PathVariable String id){
         todoService.delete(id);
     }
 
