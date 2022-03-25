@@ -21,9 +21,9 @@ public class TodoService {
 
     return todoRepository.findById(id).get();
     }
-    public boolean save(Todo todo){
+    public Todo save(Todo todo){
 
-        return todoRepository.insert(todo) == null ? false : true;
+        return todoRepository.insert(todo) ;
 
 
     }

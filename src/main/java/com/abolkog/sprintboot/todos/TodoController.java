@@ -1,8 +1,11 @@
 package com.abolkog.sprintboot.todos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -14,23 +17,27 @@ public class TodoController {
     private TodoService todoService;
 
     @GetMapping(value = {"", "/"})
-    public List<Todo> getAllTodo(){
-    return todoService.findAll();
+    public ResponseEntity<List<Todo>> getAllTodo(){
+     List<Todo> result=todoService.findAll();
+     return new ResponseEntity<>(result,HttpStatus.MULTI_STATUS.OK);
     }
 
     @GetMapping("/{id}")
-    public Todo getTodoById(@PathVariable String id){
-        return todoService.getById(id);
+    public ResponseEntity<Todo> getTodoById(@PathVariable String id){
+         Todo result=todoService.getById(id);
+         return new ResponseEntity<>(result,HttpStatus.MULTI_STATUS.OK);
     }
 
     @PostMapping(value = {"", "/"})
-    public boolean createNewTodo(@RequestBody  Todo todo){
-       return todoService.save(todo);
+    public ResponseEntity<Todo> createNewTodo(@Valid @RequestBody  Todo todo){
+        Todo result=todoService.save(todo);
+       return new ResponseEntity<>(result, HttpStatus.MULTI_STATUS.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable String id){
+    public ResponseEntity<Void> deleteById(@PathVariable String id){
         todoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.MULTI_STATUS.NO_CONTENT);
     }
 
 }

@@ -1,13 +1,19 @@
 package com.abolkog.sprintboot.todos;
 
+
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
+
 
 @Document
 public class Todo {
 
     @Id
     private String id;
+    @NotNull(message = "The title requried")
     private String title;
     private String description;
     private long timestamp;
