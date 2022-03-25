@@ -1,11 +1,13 @@
 package com.abolkog.sprintboot.todos;
 
+import com.abolkog.sprintboot.error.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TodoService {
@@ -18,8 +20,12 @@ public class TodoService {
     }
 
     public Todo getById(String id){
+    try {
+        return todoRepository.findById(id).get();
+    }catch (NoSuchElementException ex){
+        throw new NotFoundException(String.format("No Record with id [%s] was found in our database",id));
+    }
 
-    return todoRepository.findById(id).get();
     }
     public Todo save(Todo todo){
 
