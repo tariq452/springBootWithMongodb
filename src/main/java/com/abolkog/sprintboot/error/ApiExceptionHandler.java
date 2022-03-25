@@ -8,8 +8,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorDetails> handleApiException(NotFoundException ex, WebRequest request){
+    @ExceptionHandler(ApiBaseException.class)
+    public ResponseEntity<ErrorDetails> handleApiException(ApiBaseException ex, WebRequest request){
         ErrorDetails details = new ErrorDetails(ex.getMessage(),request.getDescription(true));
         return new ResponseEntity<>(details,ex.getStatusCode());
     }

@@ -1,10 +1,13 @@
 package com.abolkog.sprintboot.error;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ErrorDetails {
     private String message;
     private String uri;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-mm-yyy hh:mm:ss")
     private Date timestamp;
 
     public ErrorDetails() {

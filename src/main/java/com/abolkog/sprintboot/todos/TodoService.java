@@ -1,5 +1,6 @@
 package com.abolkog.sprintboot.todos;
 
+import com.abolkog.sprintboot.error.ConflicatException;
 import com.abolkog.sprintboot.error.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,10 @@ public class TodoService {
 
     }
     public Todo save(Todo todo){
-
+     if (todoRepository.findByTitle(todo.getTitle())!= null){
+         throw new ConflicatException("Another record with the same title exists");
+     }
         return todoRepository.insert(todo) ;
-
-
     }
 
 
