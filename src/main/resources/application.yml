@@ -3,5 +3,5 @@ server:
 spring:
   data:
     mongodb:
-      host: 172.24.137.142
+      host: 172.24.141.181
       port: 27017
